@@ -3,3 +3,70 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.starting--page {
+  text-align: center;
+  margin-top: 14rem;
+}
+
+.starting--page h1 {
+  margin-bottom: 1rem;
+  font-size: 6rem;
+}
+
+.starting--page p {
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: grey;
+}
+.start--btn {
+  border: none;
+  background-color: teal;
+  color: #fff;
+  padding: 1rem 2.5rem;
+  cursor: pointer;
+}
+
+.answer-btn button {
+  text-align: center;
+  margin-left: 1rem;
+  background-color: #fff;
+  padding: 0.3rem 2rem;
+  border-radius: 0.7rem;
+  margin-top: 1.3rem;
+  cursor: pointer;
+}
+
+.answer-btn {
+  text-align: center;
+}
+
+.quiz--page {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.grey--line {
+  width: 10px;
+  height: 10px;
+  color: black;
+}
+hr.solid {
+  border-top: 0.1px solid #dbdef0;
+  margin-top: 1rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  text-align: center;
+  align-items: center;
+}
+
+.check {
+  display: flex;
+  margin: auto;
+  margin-top: 1rem;
+  border: none;
+  background-color: teal;
+  padding: 1rem 3rem;
+  color: #fff;
+  cursor: pointer;
+}
