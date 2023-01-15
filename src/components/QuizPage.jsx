@@ -1,7 +1,8 @@
-import React, { useCallback, useMemo } from "react";
+import React from "react";
 
 function QuizPage({ item }) {
   const [selected, setSelected] = React.useState({});
+  console.log(selected);
 
   return (
     <div className="quiz--page">
@@ -14,8 +15,8 @@ function QuizPage({ item }) {
               setSelected((prev) => ({ ...prev, [item.id]: answer.id }))
             }
             style={{
-              backgroundColor: selected[item.id] === answer.id ? "teal" : "",
-              color: selected[item.id] === answer.id ? "white" : "",
+              backgroundColor: selected[item.id] === answer.id ? "#94D7A2" : "",
+              // color: selected[item.id] === answer.id ? "white" : "",
             }}
           >
             {answer.value}

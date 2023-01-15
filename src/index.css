@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: #f7f7f7;
+}
+
 .starting--page {
   text-align: center;
   margin-top: 14rem;
@@ -30,11 +34,13 @@
 .answer-btn button {
   text-align: center;
   margin-left: 1rem;
-  background-color: #fff;
+  color: #4d5b9e;
+  background-color: #f7f7f7;
   padding: 0.3rem 2rem;
   border-radius: 0.7rem;
   margin-top: 1.3rem;
   cursor: pointer;
+  border: 0.5px solid #293264;
 }
 
 .answer-btn {

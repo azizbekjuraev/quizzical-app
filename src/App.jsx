@@ -12,9 +12,11 @@ function App() {
   // https://opentdb.com/api.php?amount=5
 
   const [allQuizzes, setAllQuizzes] = useState([]);
+  // const randomArr = (arr) => {
+  //   arr.sort(() => Math.random() -0.5);
+  // };
 
   useEffect(function () {
-    console.log("Effect ran");
     fetch("https://opentdb.com/api.php?amount=5")
       .then((res) => res.json())
       .then((data) => {
@@ -24,20 +26,29 @@ function App() {
           id: nanoid(),
           answers: q.incorrect_answers
             .map((a) => ({ value: a, id: nanoid() }))
-            .concat({ value: q.correct_answer, id: nanoid(), correct: true }),
+            .concat({ value: q.correct_answer, id: nanoid(), correct: true })
+            .sort(() => Math.random() - 0.5),
         }));
         setAllQuizzes(quizzes);
       });
   }, []);
+  // console.log(allQuizzes);
+  function checkBtn() {
+    console.log(`cheking...`);
+  }
+
   const apiResults = allQuizzes.map((item) => {
     return <QuizPage item={item} key={item.id} />;
   });
+
   return (
     <main>
       {state ? (
         <>
           <section>{apiResults}</section>
-          <button className="check">Check answers</button>
+          <button className="check" onClick={checkBtn}>
+            Check answers
+          </button>
         </>
       ) : (
         <div className="starting--page">
