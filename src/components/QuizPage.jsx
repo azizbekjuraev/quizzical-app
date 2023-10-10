@@ -13,7 +13,11 @@ function QuizPage({ item, selected, setSelected, isChecked }) {
             onClick={() => setSelected(answer.id)}
             style={{
               backgroundColor:
-                selected === answer.id ? (isCorrect ? "#94D7A2" : "red") : "",
+                selected === answer.id
+                  ? isCorrect
+                    ? "#94D7A2"
+                    : "#e84f4f"
+                  : "",
             }}
           >
             {answer.value}
