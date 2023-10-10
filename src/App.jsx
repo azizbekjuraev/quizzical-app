@@ -1,20 +1,121 @@
-import React from "react";
-import { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
+// import QuizPage from "./components/QuizPage";
+// import { nanoid } from "nanoid";
+
+// function App() {
+//   const [state, setState] = useState(false);
+//   const [userAnswers, setUserAnswers] = useState({}); // Store user-selected answers
+//   const [score, setScore] = useState(null);
+//   const [isChecked, setIsChecked] = useState(false);
+
+//   function startQuiz() {
+//     setState((prev) => !prev);
+//     setUserAnswers({});
+//     setScore(null);
+//     setIsChecked(false);
+//   }
+
+//   const [allQuizzes, setAllQuizzes] = useState([]);
+
+//   useEffect(function () {
+//     fetch("https://opentdb.com/api.php?amount=5")
+//       .then((res) => res.json())
+//       .then((data) => {
+//         let quizzes = data.results;
+//         quizzes = quizzes.map((q) => ({
+//           ...q,
+//           id: nanoid(),
+//           answers: q.incorrect_answers
+//             .map((a) => ({ value: a, id: nanoid() }))
+//             .concat({ value: q.correct_answer, id: nanoid(), correct: true })
+//             .sort(() => Math.random() - 0.5),
+//         }));
+//         setAllQuizzes(quizzes);
+//       });
+//   }, []);
+
+//   function checkBtn() {
+//     let correctAnswers = 0;
+
+//     allQuizzes.forEach((quiz) => {
+//       // Get the selected answer ID for the current quiz item
+//       const selectedAnswerId = userAnswers[quiz.id];
+//       // Find the correct answer object within the answers array
+//       const correctAnswer = quiz.answers.find((answer) => answer.correct);
+
+//       // Check if the selected answer ID matches the correct answer ID
+//       if (selectedAnswerId === correctAnswer.id) {
+//         correctAnswers++;
+//         setIsChecked(true);
+//       }
+//     });
+
+//     setScore(correctAnswers);
+//   }
+
+//   const apiResults = allQuizzes.map((item) => {
+//     return (
+//       <QuizPage
+//         item={item}
+//         key={item.id}
+//         selected={userAnswers[item.id]}
+//         setSelected={(answerId) =>
+//           setUserAnswers((prev) => ({ ...prev, [item.id]: answerId }))
+//         }
+//         isChecked={isChecked}
+//       />
+//     );
+//   });
+
+//   return (
+//     <main>
+//       {state ? (
+//         <>
+//           <section>{apiResults}</section>
+//           <button className="check" onClick={checkBtn}>
+//             Check answers
+//           </button>
+//           {score !== null && (
+//             <div className="score">
+//               Your Score: {score} out of {allQuizzes.length}
+//             </div>
+//           )}
+//         </>
+//       ) : (
+//         <div className="starting--page">
+//           <h1>Quizzical</h1>
+//           <p>Solve problems</p>
+//           <button onClick={startQuiz} className="start--btn">
+//             Start Quiz
+//           </button>
+//         </div>
+//       )}
+//     </main>
+//   );
+// }
+
+// export default App;
+
+import React, { useState, useEffect } from "react";
 import QuizPage from "./components/QuizPage";
 import { nanoid } from "nanoid";
 
 function App() {
   const [state, setState] = useState(false);
+  const [userAnswers, setUserAnswers] = useState({});
+  const [score, setScore] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   function startQuiz() {
     setState((prev) => !prev);
+    setUserAnswers({});
+    setScore(null);
+    setIsChecked(false);
+    setIsPopupOpen(false);
   }
 
-  // https://opentdb.com/api.php?amount=5
-
   const [allQuizzes, setAllQuizzes] = useState([]);
-  // const randomArr = (arr) => {
-  //   arr.sort(() => Math.random() -0.5);
-  // };
 
   useEffect(function () {
     fetch("https://opentdb.com/api.php?amount=5")
@@ -32,13 +133,36 @@ function App() {
         setAllQuizzes(quizzes);
       });
   }, []);
-  // console.log(allQuizzes);
+
   function checkBtn() {
-    console.log(`cheking...`);
+    let correctAnswers = 0;
+
+    allQuizzes.forEach((quiz) => {
+      const selectedAnswerId = userAnswers[quiz.id];
+      const correctAnswer = quiz.answers.find((answer) => answer.correct);
+
+      if (selectedAnswerId === correctAnswer.id) {
+        correctAnswers++;
+        setIsChecked(true);
+      }
+    });
+
+    setScore(correctAnswers);
+    setIsPopupOpen(true);
   }
 
   const apiResults = allQuizzes.map((item) => {
-    return <QuizPage item={item} key={item.id} />;
+    return (
+      <QuizPage
+        item={item}
+        key={item.id}
+        selected={userAnswers[item.id]}
+        setSelected={(answerId) =>
+          setUserAnswers((prev) => ({ ...prev, [item.id]: answerId }))
+        }
+        isChecked={isChecked}
+      />
+    );
   });
 
   return (
@@ -49,6 +173,30 @@ function App() {
           <button className="check" onClick={checkBtn}>
             Check answers
           </button>
+          {score !== null && isPopupOpen && (
+            <div className="fixed inset-0 flex items-center justify-center z-50">
+              <div className="modal fixed inset-0 bg-gray-800 bg-opacity-75"></div>
+              <div className="bg-white w-1/2 p-4 rounded-lg shadow-lg z-10">
+                <button
+                  className="absolute top-2 right-2 text-gray-600 hover:text-red-600"
+                  onClick={() => setIsPopupOpen(false)}
+                >
+                  X
+                </button>
+                <div className="text-center">
+                  <div className="text-2xl font-semibold mb-4">
+                    Your Score: {score} out of {allQuizzes.length}
+                  </div>
+                  <button
+                    className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                    onClick={() => setIsPopupOpen(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </>
       ) : (
         <div className="starting--page">
