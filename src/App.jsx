@@ -72,7 +72,10 @@ function App() {
       {state ? (
         <>
           <section>{apiResults}</section>
-          <button className="check" onClick={checkBtn}>
+          <button
+            className="check border-neutral-400 border-2 text-neutral-600 hover:text-white hover:shadow-[inset_13rem_0_0_0] hover:shadow-teal-700 duration-[400ms,700ms] transition-[color,box-shadow]"
+            onClick={checkBtn}
+          >
             Check answers
           </button>
           {score !== null && isPopupOpen && (
@@ -112,7 +115,10 @@ function App() {
         <div className="starting--page">
           <h1>Quizzical</h1>
           <p>Solve problems</p>
-          <button onClick={startQuiz} className="start--btn">
+          <button
+            onClick={startQuiz}
+            className="start--btn bg-neutral-200 px-12 py-4 text-2xl border-neutral-400 border-2 text-neutral-600 hover:text-white hover:shadow-[inset_13rem_0_0_0] hover:shadow-teal-700 duration-[400ms,700ms] transition-[color,box-shadow]"
+          >
             Start Quiz
           </button>
         </div>
